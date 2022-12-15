@@ -1,0 +1,28 @@
+What sorting algorithm was the speaker trying to improve? Insertion sort
+At what partition size does VS perform a simpler sort algorithm instead of continuing to partition? 32
+At what partition size does GNU perform a simpler sort algorithm instead of continuing to partition? 16
+Regular insertion sort does a linear search backwards from end of array for correct spot to insert. According to the speaker, why does switching to a binary search not improve performance? It's because using binary insertion sort reduces run time by 13%, and increasing the threshold makes it worse and worse.
+Describe what is meant by branch prediction? (this may require further research)A branch predictor is a digital circuit that attempts to predict which direction a branch will take before it is known definitively.
+What is meant by the term informational entropy? (this may require further research) When all possible outcomes are considered, information entropy is the average amount of information conveyed by an event.
+If size == 15, what is size & 1? if size == 16, what is size & 1? Explain how right = first + 1 + (size & 1) avoids a conditional check.
+
+Hint:
+
+In C/C++, the & operator represents the bitwise AND operator. To form a result, it takes the bit representations of the two operands and performs an AND operation on each of the corresponding bits.
+To begin answering this question, convert 15, 16, and 1 to base 2. (use 5 digit representation for all of them). Then perform an AND operation on the operands' corresponding bits to get a 5 digit binary value. Return the value to base ten. If size == 15, then 1 If size == 16, then -------> 0. This is to position the array correctly depending on whether it is odd or even. We integrated a conditional in the arithmetic here, so it's a comparison without the jump, whereas if is a comparison with a jump.
+Speaker suggests the following algorithm:
+
+make_heap()
+unguarded_insertion_sort()
+He suggests performing make heap() first, then performing unguarded insertion sort (). Describe unguarded insertion sort() and why it is faster than regular insertion sort. How does make heap() enable you to do this? The root node of unguarded insertion sort() is the smallest element of your array. This means that the second element will be larger than the first. So we need to start looking for element three, and the two-element skip makes all the difference. Making use of make heap() allows us to rearrange our elements so that they form a heap. This makes inserting elements with unguarded insertion sort much easier ().
+The speaker talks about incorporate your conditionals into your arithmetic. What does this mean? Provide an example of this from the video and explain how the conditional is avoided. Having your conditionals into your arithmetic reduces the time consumed by the algorithm. In Case of classic heapify, there where 5 compare/jump decision in the inner loop, 3 add/shifts and 6 assignments. But if we use moves instead of swap, as we do in GNU, inner loop is only left with 2 compares, 4 arithmetic and 2 assignments. const auto jr = rightKid – ( a[rightKid - 1] <= a[rightKid] );
+The speaker talks about a bug in gnu's implementation. Describe the circumstances of this bug. There are inefficiencies in GNU which is caused due to the use of structured loops. In the case of rotated data, GNU pivot choice leads to quadratic time.
+The speaker shows several graphs about what happens as threshold increases using his new algorithm. The metric of comparison is increased, the metric of moves are increased but time drops... What metric does the author think is missing? Describe the missing metric he speaks about in the video. What is the metric measuring? Blended Cost  (C(n) + M(n) + kD(n))/n D(n) which is the average distance between two subsequent array accesses.
+What does the speaker mean by fast code is left leaning? He meant that the code that need to be fast is left-leaning on the page. This means in Linux you cant write slow code because in it’s kernel, the standard is 8 characters tab and 80 characters line width. So this means not having a lot of conditions like switch and if in your code.
+What does the speaker mean by not mixing hot and cold code? He meant of breaking out if the loop or function as soon as possible so he doesn’t end up mixing hot and cold code together. When he breaks the loop, he doesn’t cares about the code, because it is a cold code.
+Reflection:
+What did you/your team find most difficult to understand in the video? -- I want to study the difficulty of encoding the cost of operations.
+
+What is the most surprising thing you learned that you did not know before? -- According to the statistics, we cannot determine the threshold. We optimise the threshold using random data.
+
+Has the video given you ideas on how you can write better/faster code? If so, explain what you intend to change in the future when writing code. If no, please explain why. — Yes, this video gave me an idea of how to write better and faster code, as he stated that every programmer should use sort and that fast code is left-leaning.
